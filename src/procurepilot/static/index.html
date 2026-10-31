@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ProcurePilot AI agentic procurement automation demo" />
+    <title>ProcurePilot AI</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/">
+        <span class="brand-mark">P</span>
+        <span>ProcurePilot <b>AI</b></span>
+      </a>
+      <nav>
+        <a href="/docs">API Docs</a>
+        <a href="/metrics">Metrics</a>
+        <span class="status"><i></i> Local demo</span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div>
+          <p class="eyebrow">POLICY-AWARE BUSINESS AUTOMATION</p>
+          <h1>Turn purchase requests into <span>auditable decisions.</span></h1>
+          <p class="lead">
+            Four bounded agents retrieve policy, assess risk, select an approval route and
+            generate a grounded explanation. Critical decisions always remain with a human.
+          </p>
+        </div>
+        <div class="flow" aria-label="Agent workflow">
+          <div><b>01</b><span>Policy</span></div><em>→</em>
+          <div><b>02</b><span>Risk</span></div><em>→</em>
+          <div><b>03</b><span>Routing</span></div><em>→</em>
+          <div><b>04</b><span>Narrative</span></div>
+        </div>
+      </section>
+
+      <section class="workspace">
+        <form id="assessment-form" class="panel form-panel">
+          <div class="panel-heading">
+            <div><span class="step">NEW REQUEST</span><h2>Procurement details</h2></div>
+            <button id="load-example" type="button" class="button secondary">Load risky example</button>
+          </div>
+
+          <div class="grid two">
+            <label>Requester<input name="requester" value="Kadir Demir" required /></label>
+            <label>Department<input name="department" value="Engineering" required /></label>
+            <label>Vendor<input name="vendor" value="Contoso Cloud GmbH" required /></label>
+            <label>Amount in EUR<input name="amount_eur" type="number" min="1" value="3200" required /></label>
+          </div>
+          <label>Description<textarea name="description" rows="4" required>Developer tooling subscription for the platform engineering team.</textarea></label>
+          <div class="grid two">
+            <label>Data classification
+              <select name="data_classification">
+                <option value="public">Public</option>
+                <option value="internal" selected>Internal</option>
+                <option value="confidential">Confidential</option>
+                <option value="restricted">Restricted</option>
+              </select>
+            </label>
+            <fieldset>
+              <legend>Request properties</legend>
+              <label class="check"><input name="contains_personal_data" type="checkbox" /> Personal data</label>
+              <label class="check"><input name="single_source" type="checkbox" /> Single source</label>
+              <label class="check"><input name="urgent" type="checkbox" /> Urgent</label>
+            </fieldset>
+          </div>
+          <button class="button primary" type="submit"><span>Run agent workflow</span><b>→</b></button>
+          <p id="error" class="error" role="alert"></p>
+        </form>
+
+        <section class="panel result-panel" aria-live="polite">
+          <div id="empty-state" class="empty-state">
+            <div class="radar"><span></span></div>
+            <h2>Ready for assessment</h2>
+            <p>Submit a request to see the agent trace, policy evidence and approval route.</p>
+          </div>
+
+          <div id="result" hidden>
+            <div class="panel-heading result-heading">
+              <div><span class="step">ASSESSMENT</span><h2>Decision support</h2></div>
+              <span id="risk-badge" class="badge"></span>
+            </div>
+            <div class="summary-card">
+              <div><small>STATUS</small><strong id="status"></strong></div>
+              <div><small>RECOMMENDATION</small><strong id="recommendation"></strong></div>
+            </div>
+            <p id="summary" class="summary"></p>
+            <h3>Approval route</h3>
+            <div id="route" class="route"></div>
+            <h3>Why</h3>
+            <ul id="reasons" class="reasons"></ul>
+            <details open>
+              <summary>Agent execution trace</summary>
+              <div id="trace" class="trace"></div>
+            </details>
+            <details>
+              <summary>Retrieved policy evidence</summary>
+              <div id="evidence" class="evidence"></div>
+            </details>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer>Built for transparent, human-controlled AI automation · FastAPI · Semantic Kernel · Azure-ready</footer>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>
+
